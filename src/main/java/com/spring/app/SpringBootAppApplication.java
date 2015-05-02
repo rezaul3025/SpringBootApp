@@ -17,7 +17,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @EnableAutoConfiguration
 @Configuration
 @EnableJpaRepositories
-@EntityScan(basePackages={"com.spring.app"})
+@EntityScan(basePackages={"com.spring.app"})  
 public class SpringBootAppApplication {
 	
 	@Resource
