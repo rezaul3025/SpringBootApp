@@ -61,7 +61,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
 
-argo {
+cargo {
     containerId = 'tomcat7x'
     port = 9090
     deployable {
@@ -71,4 +71,5 @@ argo {
         hostname = '192.168.0.9'
         username = 'tomcat'
         password = 'tomcat'
+    }
     }
