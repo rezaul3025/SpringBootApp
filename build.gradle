@@ -63,13 +63,13 @@ task wrapper(type: Wrapper) {
 
 cargo {
     containerId = 'tomcat7x'
-    port = 9090
+    port = 6060
     deployable {
     context = 'springbootapp'
     }
     remote {
         hostname = '192.168.0.9'
-        username = 'tomcat'
-        password = 'tomcat'
+        username = 'admin'
+        password = 'admin'
     }
     }
