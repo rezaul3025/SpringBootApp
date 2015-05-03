@@ -1,5 +1,7 @@
 package com.spring.app;
 
+import java.util.Properties;
+
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
@@ -35,6 +37,11 @@ public class SpringBootAppApplication {
 	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
 	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
 	
+	private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
+	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
+	private static final String PROPERTY_NAME_PACKAGES_SCAN = "hibernate.package.scan";
+	private static final String PROPERTY_NAME_HBM2DDL_AUTO= "hibernate.hbm2ddl.auto";
+	
 	@Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -52,8 +59,8 @@ public class SpringBootAppApplication {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        //entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty(PROPERTY_NAME_PACKAGES_SCAN));
-        //entityManagerFactoryBean.setJpaProperties(hibProperties());
+        entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty(PROPERTY_NAME_PACKAGES_SCAN));
+        entityManagerFactoryBean.setJpaProperties(hibProperties());
          
         return entityManagerFactoryBean;
     }
@@ -63,5 +70,13 @@ public class SpringBootAppApplication {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
+    }
+	
+	private Properties hibProperties() {
+        Properties properties = new Properties();
+        properties.put(PROPERTY_NAME_HIBERNATE_DIALECT, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
+        properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
+        properties.put(PROPERTY_NAME_HBM2DDL_AUTO, env.getRequiredProperty(PROPERTY_NAME_HBM2DDL_AUTO));
+        return properties;
     }
 }
